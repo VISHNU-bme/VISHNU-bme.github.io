@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Library Management</title>
+  <style>
+    body {
+          font-family: 'Times New Roman', Times, serif, sans-serif;
+          background-image: url("wallpaper 1.jpg");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+    
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffffe1;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .container input[type="text"],
+    .container input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .container p {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .container p a {
+      color: #333;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form>
+      <input type="text" placeholder="Username" id="username">
+      <input type="password" placeholder="Password" id="password">
+      <button type="button" onclick="login()">Login</button>
+    </form>
+    <p>Don't have an account? <a href="#" onclick="showRegisterForm()">Register here</a></p>
+  </div>
+
+  <div class="container" style="display: none;">
+    <h2>Register</h2>
+    <form>
+      <input type="text" placeholder="Username" id="reg-username">
+      <input type="password" placeholder="Password" id="reg-password">
+      <input type="password" placeholder="Confirm Password" id="confirm-password">
+      <button type="button" onclick="register()">Register</button>
+    </form>
+    <p>Already have an account? <a href="#" onclick="showLoginForm()">Login here</a></p>
+  </div>
+
+  <script>
+    function login() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      
+      // TODO: Implement login functionality
+      // Check login credentials against database or API
+      
+      // Assuming username is "vishnu" and password is "1082"
+      if (username === 'vishnu' && password === '1082') {
+        window.location.href="afterlogin3.html"
+        // TODO: Redirect to the next page or perform other actions
+      } else {
+        alert('Invalid login credentials');
+      }
+    }
+
+    function showRegisterForm() {
+      var loginForm = document.querySelector('.container');
+      var registerForm = document.querySelectorAll('.container')[1];
+      
+      loginForm.style.display = 'none';
+      registerForm.style.display = 'block';
+    }
+
+    function showLoginForm() {
+      var loginForm = document.querySelector('.container');
+      var registerForm = document.querySelectorAll('.container')[1];
+      
+      loginForm.style.display = 'block';
+      registerForm.style.display = 'none';
+    }
+
+    function register() {
+      var username = document.getElementById('reg-username').value;
+      var password = document.getElementById('reg-password').value;
+      var confirmPassword = document.getElementById('confirm-password').value;
+
+      // TODO: Implement registration functionality
+      // Check if username is available and validate password
+      
+      // Assuming successful registration
+      alert('Registration successful!');
+      showLoginForm();
+    }
+  </script>
+
+</body>
+</html>

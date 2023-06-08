@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Library Management Dashboard</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif, sans-serif;
+      background-color: #7c4c4c;
+      padding: 20px;
+      background-image: url('wallpaper 3.jpg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: hsl(0, 23%, 54%);
+      border: 1px solid #4d3030;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(158, 37, 37, 0.1);
+      padding: 20px;
+      background-color: rgba(172, 73, 73, 0.9);
+    }
+
+    .container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .container p {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .container .search {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .container .search input[type="text"] {
+      width: 300px;
+      padding: 10px;
+      margin-right: 10px;
+      border: 1px solid #53272b;
+      border-radius: 3px;
+    }
+
+    .container .search button {
+      padding: 10px;
+      background-color: #df7284;
+      color: #f0b5b5;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .container .book-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .container .book-list li {
+      border: 1px solid #943535;
+      border-radius: 3px;
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+      text-align: center;
+    }
+
+    .container .book-list li img {
+      max-width: 150px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .container .book-list li h3 {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+
+    .container .book-list li p {
+      margin-top: 0;
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .pagination a {
+      display: inline-block;
+      padding: 5px 10px;
+      margin-right: 5px;
+      background-color: #9b4949;
+      border: 1px solid #382121;
+      border-radius: 3px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .pagination a.active {
+      background-color: #974141;
+      color: #9b4c4c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome to the Library Management Dashboard!</h2>
+    <p>Here you can find information and perform various library management tasks.</p>
+
+    <div class="search">
+      <input type="text" placeholder="Search by title, author, or category" id="search-input">
+      <button type="button" onclick="searchBooks()">Search</button>
+    </div>
+
+    <ul class="book-list">
+      <!-- Display list of available books here -->
+      <!-- Example book item:
+      <li>
+        <img src="book1.jpg" alt="Book Image">
+        <h3>Book Title</h3>
+        <p>Author: Book Author</p>
+        <p>Category: Book Category</p>
+        <p>Availability: Available</p>
+      </li>
+      -->
+    </ul>
+
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+  <script>
+    var books = [
+      {
+        image: "iammalala.jpg",
+        title: "I am malala",
+        author: "Malala Yousafzai",
+        category: "Autobiography",
+        availability: "Available"
+      },
+      {
+        image: "long way to freedom.jpg",
+        title: "Long walk to Freedom",
+        author: "Nelson Mandela",
+        category: "Autobiography",
+        availability: "Available"
+      },
+      {
+        image: "ponniyin selvan.jpg",
+        title: "Ponniyin selvan",
+        author: "Kalki",
+        category: "Tamil Literatrue",
+        availability: "Available"
+      },
+      {
+        image: "sivagambiyin sabatham.jpg",
+        title: "Sivagambiyin Sabatham",
+        author: "Kalki",
+        category: "Tamil Literatrue",
+        availability: "Unavailable"
+      },
+      {
+        image: "the power of myth.jpg",
+        title: "The Power of Myth",
+        author: "Joseph Campbell",
+        category: "Social",
+        availability: "Available"
+      },
+      {
+        image: "the man without qualities.jpg",
+        title: "The man without qualities",
+        author: "Robert Musil",
+        category: "Social",
+        availability: "Available"
+      },
+      {
+        image: "age of vice.jpg",
+        title: "Age of Vice",
+        author: "Deepti Kapoor",
+        category: "Fiction",
+        availability: "Available"
+      },
+      {
+        image: "city under one roof.jpg",
+        title: "City Under one roof",
+        author: "Iris Yamashita",
+        category: "Fiction",
+        availability: "Available"
+      }
+    ];
+
+    var itemsPerPage = 3;
+    var currentPage = 1;
+
+    function displayBooks(startIndex) {
+      var endIndex = startIndex + itemsPerPage;
+      var bookList = document.querySelector('.book-list');
+      bookList.innerHTML = '';
+
+      for (var i = startIndex; i < endIndex && i < books.length; i++) {
+        var book = books[i];
+        var li = document.createElement('li');
+        li.innerHTML = `
+          <img src="${book.image}" alt="Book Image">
+          <h3>${book.title}</h3>
+          <p>Author: ${book.author}</p>
+          <p>Category: ${book.category}</p>
+          <p>Availability: ${book.availability}</p>
+        `;
+        bookList.appendChild(li);
+      }
+    }
+
+    function displayPagination() {
+      var totalPages = Math.ceil(books.length / itemsPerPage);
+      var pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+
+      for (var i = 1; i <= totalPages; i++) {
+        var link = document.createElement('a');
+        link.href = '#';
+        link.textContent = i;
+
+        if (i === currentPage) {
+          link.classList.add('active');
+        }
+
+        link.addEventListener('click', function() {
+          currentPage = parseInt(this.textContent);
+          displayBooks((currentPage - 1) * itemsPerPage);
+          displayPagination();
+        });
+
+        pagination.appendChild(link);
+      }
+    }
+
+    function searchBooks() {
+      var searchInput = document.getElementById('search-input').value;
+      var filteredBooks = [];
+
+      for (var i = 0; i < books.length; i++) {
+        var book = books[i];
+        var title = book.title.toLowerCase();
+        var author = book.author.toLowerCase();
+        var category = book.category.toLowerCase();
+
+        if (title.includes(searchInput) || author.includes(searchInput) || category.includes(searchInput)) {
+          filteredBooks.push(book);
+        }
+      }
+      books = filteredBooks;
+      currentPage = 1;
+      displayBooks(0); // Display the first page of books
+      displayPagination(); // Display the pagination links
+    }
+
+    // Initial display
+    displayBooks(0);
+    displayPagination();
+  </script>
+</body>
+</html>
